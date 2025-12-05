@@ -67,7 +67,7 @@ struct AdventOfCode: AsyncParsableCommand {
     for challengeType in challenges {
       print("Executing Advent of Code challenge \(challengeType.day)...")
 
-      let challenge = challengeType.init()
+      let challenge = try challengeType.init()
       let timing1 = await run(part: challenge.part1, named: "Part 1")
       let timing2 = await run(part: challenge.part2, named: "Part 2")
 

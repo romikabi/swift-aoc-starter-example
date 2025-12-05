@@ -1,4 +1,5 @@
 @_exported import Algorithms
+import ArgumentParser
 @_exported import Collections
 import Foundation
 
@@ -54,11 +55,11 @@ extension AdventDay {
   }
 
   /// An initializer that loads the test data from the corresponding data file.
-  init() {
-    self.init(data: Self.loadData(challengeDay: Self.day))
+  init() throws {
+    self.init(data: try Self.loadData(challengeDay: Self.day))
   }
 
-  static func loadData(challengeDay: Int) -> String {
+  static func loadData(challengeDay: Int) throws -> String {
     let dayString = String(format: "%02d", challengeDay)
     let dataFilename = "Day\(dayString)"
     let dataURL = Bundle.module.url(
@@ -69,7 +70,7 @@ extension AdventDay {
     guard let dataURL,
       let data = try? String(contentsOf: dataURL, encoding: .utf8)
     else {
-      fatalError("Couldn't find file '\(dataFilename).txt' in the 'Data' directory.")
+      throw ValidationError("Couldn't find file '\(dataFilename).txt' in the 'Data' directory.")
     }
 
     // On Windows, line separators may be CRLF. Converting to LF so that \n
